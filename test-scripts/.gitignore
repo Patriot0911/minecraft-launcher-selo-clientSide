@@ -1,0 +1,10 @@
+.env
+dist/
+.idea/
+.vscode/
+node_modules/
+build/
+tmp/
+temp/
+downloads/
+logs/
