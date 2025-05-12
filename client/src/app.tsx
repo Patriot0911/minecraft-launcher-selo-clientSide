@@ -5,6 +5,6 @@ import { store } from './store';
 const root = createRoot(document.body);
 root.render(
   <Provider store={store}>
-    <h2>Hello from React!</h2>
+    <h2>Hello ftestsqwewqrom React!</h2>
   </Provider>
 );

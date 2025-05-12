@@ -1,5 +1,6 @@
 {
   "name": "selo-client",
+  "description": "Minecraft launcher",
   "productName": "selo-client",
   "version": "1.0.0",
   "main": ".webpack/main",
