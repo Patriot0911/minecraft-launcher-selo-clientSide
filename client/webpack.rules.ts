@@ -29,16 +29,25 @@ export const rules: Required<ModuleOptions>['rules'] = [
     },
   },
   {
-    test: /\.s[ac]ss$/i,
+    test: /\.module\.s[ac]ss$/i,
     use: [
-      { loader: 'style-loader', },
+      { loader: 'style-loader' },
       {
         loader: 'css-loader',
         options: {
           modules: true,
         },
       },
-      { loader: 'sass-loader', },
+      { loader: 'sass-loader' },
     ],
-  }
+  },
+  {
+    test: /\.s[ac]ss$/i,
+    exclude: /\.module\.s[ac]ss$/i,
+    use: [
+      { loader: 'style-loader' },
+      { loader: 'css-loader' },
+      { loader: 'sass-loader' },
+    ],
+  },
 ];
