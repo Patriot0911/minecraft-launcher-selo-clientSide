@@ -1,5 +1,14 @@
 import { API_URL } from '../scripts/api.constants';
 
+declare global {
+  interface Window {
+    electron: {
+      login: (credentials: LoginCredentials) => Promise<AuthResponse>;
+      register: (credentials: RegisterCredentials) => Promise<AuthResponse>;
+    }
+  }
+}
+
 interface LoginCredentials {
   login: string;
   password: string;
@@ -15,7 +24,11 @@ interface AuthResponse {
   id: string;
   username: string;
   email: string;
-  token: string;
+  accessToken: string;
+  refreshToken: string;
+  status: number;
+  message?: string;
+  details?: string[];
 }
 
 class AuthService {
@@ -44,42 +57,26 @@ class AuthService {
   }
 
   public async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const response = await fetch(`${API_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    });
-
-    if (!response.ok) {
-      throw new Error('Login failed');
+    const data = await window.electron.login(credentials);
+    if (data.status !== 200) {
+      throw new Error(data.message);
     }
-
-    const data = await response.json();
-    this.setToken(data.token);
+    this.setToken(data.accessToken);
     return data;
   }
 
   public async register(credentials: RegisterCredentials): Promise<AuthResponse> {
-    const response = await fetch(`${API_URL}/auth/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    });
+    const data = await window.electron.register(credentials);
 
-    if (!response.ok) {
-      throw new Error('Registration failed');
+    if (data.status !== 200) {
+      const message = data?.details?.map((detail: any) => detail).join('\n') ?? data.message;
+      throw new Error(message);
     }
-
-    const data = await response.json();
-    this.setToken(data.token);
+    this.setToken(data.accessToken);
     return data;
   }
 
-  public logout() {
+  public async logout() {
     this.clearToken();
   }
 

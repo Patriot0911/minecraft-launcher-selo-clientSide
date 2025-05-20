@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import dotEnv from 'dotenv';
+import { setupAuthHandlers } from './scripts/ipc/handlers/auth.handlers';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -24,7 +25,10 @@ const createWindow = (): void => {
   mainWindow.webContents.openDevTools();
 };
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createWindow();
+  setupAuthHandlers();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -37,3 +41,4 @@ app.on('activate', () => {
     createWindow();
   };
 });
+

@@ -11,15 +11,15 @@ import './styles/auth.global.scss';
 const AppContent = () => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      GameVersionService.fetchAll().then(
-        (state) => {
-          console.log({state});
-        }
-      );
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     GameVersionService.fetchAll().then(
+  //       (state) => {
+  //         console.log({state});
+  //       }
+  //     );
+  //   }
+  // }, [isAuthenticated]);
 
   return isAuthenticated ? <Home /> : <Auth />;
 };
