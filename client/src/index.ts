@@ -1,6 +1,6 @@
+import handlersSetup from './scripts/ipc/handlersSetup';
 import { app, BrowserWindow } from 'electron';
 import dotEnv from 'dotenv';
-import { setupAuthHandlers } from './scripts/ipc/handlers/auth.handlers';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -27,7 +27,7 @@ const createWindow = (): void => {
 
 app.on('ready', () => {
   createWindow();
-  setupAuthHandlers();
+  handlersSetup();
 });
 
 app.on('window-all-closed', () => {

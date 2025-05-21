@@ -1,41 +1,44 @@
-import { ipcMain } from 'electron';
-import { API_URL } from '../constants';
+import type { LoginCredentials, RegisterCredentials, } from '../../../models/auth';
+import { IElectronResponse } from '../../../types/handlers';
+import { API_URL } from '../../constants';
+import AuthMapper from '../mappers/auth.mappers';
 
-interface LoginCredentials {
-  login: string;
-  password: string;
-}
+const headers = { 'Content-Type': 'application/json', };
 
-interface RegisterCredentials {
-  username: string;
-  email: string;
-  password: string;
-}
-
-export const setupAuthHandlers = () => {
-  ipcMain.handle('login', async (event, credentials: LoginCredentials) => {
+const authHandlers = {
+  login: async (credentials: LoginCredentials): Promise<IElectronResponse> => {
     const res = await fetch(`${API_URL}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
+      method: 'POST',
+      headers,
     });
     const data = await res.json();
+    if(!res.ok)
+      return {
+        data,
+        state: false,
+        status: res.status,
+        message: data.message,
+      };
     return {
-      ...data,
+      data: AuthMapper.loginMapper(data),
+      state: true,
       status: res.status,
     };
-  });
-
-  ipcMain.handle('register', async (event, credentials: RegisterCredentials) => {
+  },
+  register: async (credentials: RegisterCredentials): Promise<IElectronResponse> => {
     const res = await fetch(`${API_URL}/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
+      method: 'POST',
+      headers,
     });
     const data = await res.json();
     return {
-      ...data,
+      data,
+      state: true,
       status: res.status,
     };
-  });
-}; 
+  },
+};
+
+export default authHandlers;

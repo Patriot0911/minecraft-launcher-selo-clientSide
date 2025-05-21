@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { registerStart, registerSuccess, registerFailure } from '../../store/slices/authSlice';
-import AuthService from '../../services/auth.service';
+import AuthService from '../../scripts/services/auth.service';
 
 const Register = () => {
   const dispatch = useAppDispatch();

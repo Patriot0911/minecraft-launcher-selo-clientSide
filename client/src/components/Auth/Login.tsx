@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginStart, loginSuccess, loginFailure } from '../../store/slices/authSlice';
-import AuthService from '../../services/auth.service';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import AuthService from '../../scripts/services/auth.service';
+import { useState } from 'react';
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -20,12 +20,11 @@ const Login = () => {
         login: formData.login,
         password: formData.password,
       };
-
       const response = await AuthService.getInstance().login(credentials);
       dispatch(loginSuccess(response));
     } catch (err) {
       dispatch(loginFailure(err instanceof Error ? err.message : 'Login failed'));
-    }
+    };
   };
 
   return (

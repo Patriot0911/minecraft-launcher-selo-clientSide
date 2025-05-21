@@ -1,35 +1,4 @@
-import { API_URL } from '../scripts/api.constants';
-
-declare global {
-  interface Window {
-    electron: {
-      login: (credentials: LoginCredentials) => Promise<AuthResponse>;
-      register: (credentials: RegisterCredentials) => Promise<AuthResponse>;
-    }
-  }
-}
-
-interface LoginCredentials {
-  login: string;
-  password: string;
-}
-
-interface RegisterCredentials {
-  username: string;
-  email: string;
-  password: string;
-}
-
-interface AuthResponse {
-  id: string;
-  username: string;
-  email: string;
-  accessToken: string;
-  refreshToken: string;
-  status: number;
-  message?: string;
-  details?: string[];
-}
+import { AuthResponse, LoginCredentials, RegisterCredentials, } from "../../models/auth";
 
 class AuthService {
   private static instance: AuthService;
@@ -57,21 +26,20 @@ class AuthService {
   }
 
   public async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const data = await window.electron.login(credentials);
-    if (data.status !== 200) {
-      throw new Error(data.message);
-    }
+    const { data, state, message, } = await window.electron.auth.login(credentials);
+    if (!state) {
+      throw new Error(message);
+    };
     this.setToken(data.accessToken);
     return data;
   }
 
   public async register(credentials: RegisterCredentials): Promise<AuthResponse> {
-    const data = await window.electron.register(credentials);
-
-    if (data.status !== 200) {
-      const message = data?.details?.map((detail: any) => detail).join('\n') ?? data.message;
+    const { data, state, message: errorMessage, } = await window.electron.auth.register(credentials);
+    if (!state) {
+      const message = data?.details?.map((detail: any) => detail).join('\n') ?? errorMessage;
       throw new Error(message);
-    }
+    };
     this.setToken(data.accessToken);
     return data;
   }
@@ -85,4 +53,4 @@ class AuthService {
   }
 }
 
-export default AuthService; 
+export default AuthService;

@@ -8,6 +8,8 @@ contextBridge.exposeInMainWorld('env', {
 });
 
 contextBridge.exposeInMainWorld('electron', {
-  login: (credentials: any) => ipcRenderer.invoke('login', credentials),
-  register: (credentials: any) => ipcRenderer.invoke('register', credentials),
+  auth: {
+    login: (credentials: any) => ipcRenderer.invoke('auth/login', credentials),
+    register: (credentials: any) => ipcRenderer.invoke('auth/register', credentials),
+  },
 });
