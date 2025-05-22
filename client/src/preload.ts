@@ -2,6 +2,7 @@ import { contextBridge, ipcRenderer } from 'electron';
 
 const modules = {
   auth: ['login', 'register'],
+  gameVersions: ['getVersions'],
 };
 
 const buildIpcAPI = (struct: Record<string, string[]>) => {

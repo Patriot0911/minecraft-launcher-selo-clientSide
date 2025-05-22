@@ -1,3 +1,4 @@
+import gameVersionsHandlers from "./handlers/game-versions.handlers";
 import { HandlerFn, HandlerMap, } from "../../../types/handlers";
 import authHandlers from "./handlers/auth.handlers";
 import { isProduction } from "../constants";
@@ -5,6 +6,7 @@ import { ipcMain } from "electron";
 
 const handlersList: HandlerMap = {
   auth: authHandlers,
+  gameVersions: gameVersionsHandlers,
 };
 
 const reqWrapper = (func: HandlerFn) => async (...args: any[]) => {

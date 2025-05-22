@@ -3,29 +3,18 @@ import { useAppSelector } from '../../store/hooks';
 import Auth from '../Auth/Auth';
 import styles from './styles.module.scss';
 import WindowController from '../WindowController';
-
-const gameVersions = [
-  { id: '1.20.4', name: '1.20.4', type: 'release' },
-  { id: '1.20.2', name: '1.20.2', type: 'release' },
-  { id: '1.19.4', name: '1.19.4', type: 'release' },
-  { id: '1.18.2', name: '1.18.2', type: 'release' },
-  { id: '1.17.1', name: '1.17.1', type: 'release' },
-];
+import GameVersionsList from '../GameVersionsList';
 
 const Home = () => {
-  const [selectedVersion, setSelectedVersion] = useState(gameVersions[0]);
   const [showAuth, setShowAuth] = useState(false);
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+  const selectedVersion = useAppSelector((state) => state.versions.versions.selectedVersion);
 
   useEffect(() => {
     if (isAuthenticated) {
       setShowAuth(false);
     }
   }, [isAuthenticated]);
-
-  const handleVersionSelect = (version: typeof gameVersions[0]) => {
-    setSelectedVersion(version);
-  };
 
   const toggleAuth = () => {
     setShowAuth(!showAuth);
@@ -37,19 +26,7 @@ const Home = () => {
       <div className={styles.container}>
         <div className={styles.sidebar}>
           <h2>Game Versions</h2>
-          <ul className={styles.versionList}>
-            {gameVersions.map((version) => (
-              <li
-                key={version.id}
-                className={`${styles.versionItem} ${
-                  selectedVersion.id === version.id ? styles.active : ''
-                }`}
-                onClick={() => handleVersionSelect(version)}
-              >
-                {version.name}
-              </li>
-            ))}
-          </ul>
+          <GameVersionsList />
         </div>
         <div className={styles.mainContent}>
           <div className={styles.authContainer}>
@@ -72,11 +49,13 @@ const Home = () => {
               </div>
             </>
           )}
-
-          <div className={styles.versionContent}>
-            <h2>Minecraft {selectedVersion.name}</h2>
-            <p>Type: {selectedVersion.type}</p>
-          </div>
+          {
+            selectedVersion && (
+              <div className={styles.versionContent}>
+                <h2>Minecraft {selectedVersion}</h2>
+              </div>
+            )
+          }
         </div>
       </div>
     </div>

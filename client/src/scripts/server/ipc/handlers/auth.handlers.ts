@@ -6,7 +6,7 @@ import { API_URL } from '../../constants';
 const headers = { 'Content-Type': 'application/json', };
 
 const authHandlers = {
-  login: async (credentials: LoginCredentials): Promise<IElectronResponse> => {
+  login: async (credentials: LoginCredentials): Promise<IElectronResponse<any>> => {
     const res = await fetch(`${API_URL}/auth/login`, {
       body: JSON.stringify(credentials),
       method: 'POST',
@@ -26,7 +26,7 @@ const authHandlers = {
       status: res.status,
     };
   },
-  register: async (credentials: RegisterCredentials): Promise<IElectronResponse> => {
+  register: async (credentials: RegisterCredentials): Promise<IElectronResponse<any>> => {
     const res = await fetch(`${API_URL}/auth/register`, {
       body: JSON.stringify(credentials),
       method: 'POST',
