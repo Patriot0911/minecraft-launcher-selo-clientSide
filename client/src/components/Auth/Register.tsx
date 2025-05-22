@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { registerStart, registerSuccess, registerFailure } from '../../store/slices/authSlice';
-import AuthService from '../../scripts/services/auth.service';
+import { registerFailure } from '../../store/slices/authSlice';
+import { registerThunk } from '../../store/thunks/authThunk';
+import { useState } from 'react';
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -15,21 +15,13 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
       dispatch(registerFailure('Passwords do not match'));
       return;
-    }
-
-    dispatch(registerStart());
-
-    try {
-      const { confirmPassword, ...credentials } = formData;
-      const response = await AuthService.getInstance().register(credentials);
-      dispatch(registerSuccess(response));
-    } catch (err) {
-      dispatch(registerFailure(err instanceof Error ? err.message : 'Registration failed'));
-    }
+    };
+    const { confirmPassword, ...credentials } = formData;
+    dispatch(registerThunk(credentials));
   };
 
   return (

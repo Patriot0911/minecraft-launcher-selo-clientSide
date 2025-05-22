@@ -1,11 +1,8 @@
+import authHandlers from "../scripts/ipc/handlers/auth.handlers";
+
 declare global {
   interface Window {
-    electron: {
-      auth: {
-        login: (credentials: LoginCredentials) => Promise<AuthResponse>;
-        register: (credentials: RegisterCredentials) => Promise<AuthResponse>;
-      };
-    };
+    electron: IElectronAPI;
   }
 };
 
@@ -18,3 +15,7 @@ export interface IElectronResponse {
 
 export type HandlerFn = (...args: any[]) => Promise<IElectronResponse>;
 export type HandlerMap = Record<string, Record<string, HandlerFn>>;
+
+export interface IElectronAPI {
+  auth: typeof authHandlers;
+};

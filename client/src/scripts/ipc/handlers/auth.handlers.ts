@@ -1,7 +1,7 @@
 import type { LoginCredentials, RegisterCredentials, } from '../../../models/auth';
 import { IElectronResponse } from '../../../types/handlers';
-import { API_URL } from '../../constants';
 import AuthMapper from '../mappers/auth.mappers';
+import { API_URL } from '../../constants';
 
 const headers = { 'Content-Type': 'application/json', };
 

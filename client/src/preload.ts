@@ -1,15 +1,26 @@
-// See the Electron documentation for details on how to use preload scripts:
-// https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
-
+import authHandlers from './scripts/ipc/handlers/auth.handlers';
 import { contextBridge, ipcRenderer } from 'electron';
+
+const modules = {
+  auth: Object.keys(authHandlers),
+};
+
+const buildIpcAPI = (struct: Record<string, string[]>) => {
+  const api: Record<string, any> = {};
+  for(const module in struct) {
+    const methods = struct[module];
+    if(methods.length < 1)
+      continue;
+    api[module] = new Object();
+    for(const method of methods) {
+      api[module][method] = (...args: any[]) => ipcRenderer.invoke(`${module}/${method}`, ...args);
+    };
+  };
+  return api;
+};
+
+contextBridge.exposeInMainWorld('electron', buildIpcAPI(modules));
 
 contextBridge.exposeInMainWorld('env', {
   API_URL: process.env.API_URL,
-});
-
-contextBridge.exposeInMainWorld('electron', {
-  auth: {
-    login: (credentials: any) => ipcRenderer.invoke('auth/login', credentials),
-    register: (credentials: any) => ipcRenderer.invoke('auth/register', credentials),
-  },
 });

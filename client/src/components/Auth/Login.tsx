@@ -1,6 +1,5 @@
-import { loginStart, loginSuccess, loginFailure } from '../../store/slices/authSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import AuthService from '../../scripts/services/auth.service';
+import { loginThunk } from '../../store/thunks/authThunk';
 import { useState } from 'react';
 
 const Login = () => {
@@ -13,18 +12,11 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(loginStart());
-
-    try {
-      const credentials = {
-        login: formData.login,
-        password: formData.password,
-      };
-      const response = await AuthService.getInstance().login(credentials);
-      dispatch(loginSuccess(response));
-    } catch (err) {
-      dispatch(loginFailure(err instanceof Error ? err.message : 'Login failed'));
+    const credentials = {
+      login: formData.login,
+      password: formData.password,
     };
+    dispatch(loginThunk(credentials));
   };
 
   return (
@@ -56,4 +48,4 @@ const Login = () => {
   );
 };
 
-export default Login; 
+export default Login;

@@ -1,10 +1,14 @@
-import { useState } from 'react';
-import Login from './Login';
 import Register from './Register';
+import { useEffect, useState } from 'react';
+import Login from './Login';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
+  useEffect(
+    () => {
 
+    }, []
+  );
   return (
     <div className="auth-wrapper">
       <div className="auth-toggle">
@@ -26,4 +30,4 @@ const Auth = () => {
   );
 };
 
-export default Auth; 
+export default Auth;
