@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit/dist";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { LoginCredentials, RegisterCredentials } from "../../models/auth";
 import AuthService from "../../scripts/services/auth.service";
 

@@ -1,8 +1,7 @@
-import authHandlers from './scripts/ipc/handlers/auth.handlers';
 import { contextBridge, ipcRenderer } from 'electron';
 
 const modules = {
-  auth: Object.keys(authHandlers),
+  auth: ['login', 'register'],
 };
 
 const buildIpcAPI = (struct: Record<string, string[]>) => {
