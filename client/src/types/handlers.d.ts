@@ -3,6 +3,11 @@ import authHandlers from "../scripts/ipc/handlers/auth.handlers";
 declare global {
   interface Window {
     electron: IElectronAPI;
+    windowControls: {
+      minimize: () => void;
+      maximize: () => void;
+      close: () => void;
+    };
   }
 };
 

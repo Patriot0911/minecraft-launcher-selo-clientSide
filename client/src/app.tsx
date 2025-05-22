@@ -1,3 +1,4 @@
+import WindowController from './components/WindowController';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import Home from './components/Home';

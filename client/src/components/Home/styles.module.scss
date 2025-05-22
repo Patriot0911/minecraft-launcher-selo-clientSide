@@ -1,10 +1,12 @@
-.test {
-  background-color: red;
+.window-wrapper {
+  display: flex;
+  height: 100dvh;
+  flex-direction: column;
 }
 
 .container {
   display: flex;
-  height: 100vh;
+  flex-grow: 1;
   background-color: #1a1a1a;
   color: #ffffff;
   position: relative;
