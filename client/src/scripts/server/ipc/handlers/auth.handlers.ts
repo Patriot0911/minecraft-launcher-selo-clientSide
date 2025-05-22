@@ -1,5 +1,5 @@
-import type { LoginCredentials, RegisterCredentials, } from '../../../models/auth';
-import { IElectronResponse } from '../../../types/handlers';
+import type { LoginCredentials, RegisterCredentials, } from '../../../../models/auth';
+import { IElectronResponse } from '../../../../types/handlers';
 import AuthMapper from '../mappers/auth.mappers';
 import { API_URL } from '../../constants';
 

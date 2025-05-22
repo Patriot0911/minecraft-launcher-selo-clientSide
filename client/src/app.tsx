@@ -1,8 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { useAppSelector } from './store/hooks';
 import Home from './components/Home';
-import Auth from './components/Auth/Auth';
 import { store } from './store';
 import './styles/auth.global.scss';
 

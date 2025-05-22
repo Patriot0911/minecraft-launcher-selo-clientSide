@@ -1,4 +1,5 @@
-import handlersSetup from './scripts/ipc/handlersSetup';
+import initWindowControls from './scripts/server/ipc/windowControls';
+import handlersSetup from './scripts/server/ipc/handlersSetup';
 import { app, BrowserWindow } from 'electron';
 import dotEnv from 'dotenv';
 
@@ -32,6 +33,7 @@ const createWindow = (): void => {
 app.on('ready', () => {
   createWindow();
   handlersSetup();
+  initWindowControls();
 });
 
 app.on('window-all-closed', () => {

@@ -1,4 +1,4 @@
-import { AuthResponse, LoginCredentials, RegisterCredentials, } from "../../models/auth";
+import { AuthResponse, LoginCredentials, RegisterCredentials, } from "../../../models/auth";
 
 class AuthService {
   private static instance: AuthService;

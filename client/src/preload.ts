@@ -20,6 +20,12 @@ const buildIpcAPI = (struct: Record<string, string[]>) => {
 
 contextBridge.exposeInMainWorld('electron', buildIpcAPI(modules));
 
+contextBridge.exposeInMainWorld('windowControls', {
+  minimize: () => ipcRenderer.send('window:minimize'),
+  maximize: () => ipcRenderer.send('window:maximize'),
+  close: () => ipcRenderer.send('window:close'),
+});
+
 contextBridge.exposeInMainWorld('env', {
   API_URL: process.env.API_URL,
 });

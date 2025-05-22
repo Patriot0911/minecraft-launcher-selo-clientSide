@@ -1,4 +1,4 @@
-import { HandlerFn, HandlerMap, } from "../../types/handlers";
+import { HandlerFn, HandlerMap, } from "../../../types/handlers";
 import authHandlers from "./handlers/auth.handlers";
 import { isProduction } from "../constants";
 import { ipcMain } from "electron";

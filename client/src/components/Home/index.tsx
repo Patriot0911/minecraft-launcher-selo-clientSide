@@ -34,6 +34,11 @@ const Home = () => {
     <div className={styles.container}>
       <div className={styles.sidebar}>
         <h2>Game Versions</h2>
+
+        <button onClick={() => (window as any).windowControls.minimize()}>_</button>
+        <button onClick={() => (window as any).windowControls.maximize()}>[ ]</button>
+        <button onClick={() => (window as any).windowControls.close()}>X</button>
+
         <ul className={styles.versionList}>
           {gameVersions.map((version) => (
             <li
