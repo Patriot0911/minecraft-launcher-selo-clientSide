@@ -2,11 +2,22 @@ import { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
 
-const Auth = () => {
+interface AuthProps {
+  onClose?: () => void;
+}
+
+const Auth = ({ onClose }: AuthProps) => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
     <div className="auth-wrapper">
+      <button 
+        className="auth-close-button"
+        onClick={onClose}
+        aria-label="Close"
+      >
+        ×
+      </button>
       <div className="auth-toggle">
         <button
           className={isLogin ? 'active' : ''}

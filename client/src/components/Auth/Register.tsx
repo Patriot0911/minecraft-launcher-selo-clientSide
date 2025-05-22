@@ -25,8 +25,8 @@ const Register = () => {
 
     try {
       const { confirmPassword, ...credentials } = formData;
-      const response = await AuthService.getInstance().register(credentials);
-      dispatch(registerSuccess(response));
+      await AuthService.getInstance().register(credentials);
+      dispatch(registerSuccess());
     } catch (err) {
       dispatch(registerFailure(err instanceof Error ? err.message : 'Registration failed'));
     }

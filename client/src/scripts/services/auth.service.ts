@@ -30,6 +30,7 @@ class AuthService {
     if (!state) {
       throw new Error(message);
     };
+    console.log(data);
     this.setToken(data.accessToken);
     return data;
   }
@@ -40,6 +41,7 @@ class AuthService {
       const message = data?.details?.map((detail: any) => detail).join('\n') ?? errorMessage;
       throw new Error(message);
     };
+    console.log(data);
     this.setToken(data.accessToken);
     return data;
   }

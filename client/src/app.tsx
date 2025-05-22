@@ -7,8 +7,7 @@ import { store } from './store';
 import './styles/auth.global.scss';
 
 const AppContent = () => {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
-  return isAuthenticated ? <Home /> : <Auth />;
+  return <Home />;
 };
 
 const App = () => {

@@ -20,8 +20,8 @@ const Login = () => {
         login: formData.login,
         password: formData.password,
       };
-      const response = await AuthService.getInstance().login(credentials);
-      dispatch(loginSuccess(response));
+      await AuthService.getInstance().login(credentials);
+      dispatch(loginSuccess());
     } catch (err) {
       dispatch(loginFailure(err instanceof Error ? err.message : 'Login failed'));
     };
