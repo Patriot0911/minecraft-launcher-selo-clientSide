@@ -10,12 +10,6 @@ export interface RegisterCredentials {
 };
 
 export interface AuthResponse {
-  id: string;
-  username: string;
-  email: string;
   accessToken: string;
   refreshToken: string;
-  status: number;
-  message?: string;
-  details?: string[];
 };
