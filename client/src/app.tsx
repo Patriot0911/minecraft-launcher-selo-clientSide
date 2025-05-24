@@ -1,12 +1,11 @@
-import WindowController from './components/WindowController';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import Home from './components/Home';
+import Window from './components/Window';
 import { store } from './store';
 import './styles/auth.global.scss';
 
 const AppContent = () => {
-  return <Home />;
+  return <Window />;
 };
 
 const App = () => {

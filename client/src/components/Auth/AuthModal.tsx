@@ -15,7 +15,7 @@ const Auth = ({ onClose }: AuthProps) => {
   );
   return (
     <div className="auth-wrapper">
-      <button 
+      <button
         className="auth-close-button"
         onClick={onClose}
         aria-label="Close"
