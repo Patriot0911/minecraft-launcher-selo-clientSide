@@ -7,7 +7,7 @@ const WindowController = () => {
   return (
     <div className={styles['window-wrapper']}>
       <button className={styles['window-action']} onClick={minimizeWindow}>_</button>
-      <button className={styles['window-action']} onClick={maximizeWindow}>[]</button>
+      <button className={styles['window-action']} onClick={maximizeWindow}>[ ]</button>
       <button className={styles['window-action']} onClick={closeWindow}>X</button>
     </div>
   );

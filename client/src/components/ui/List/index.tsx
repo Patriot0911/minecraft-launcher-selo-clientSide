@@ -1,3 +1,4 @@
+import { CgSearchLoading } from "react-icons/cg";
 import { ReactNode } from "react";
 import styles from './styles.module.scss';
 
@@ -13,7 +14,7 @@ export interface IListProps {
 
 const List = ({ items, selectedItem, setSelectedItem, }: IListProps) => {
   return (
-    <ul className={styles['items-wrapper']}>
+    <ul className={`${styles['items-wrapper']} ${items.length < 1 ? styles['empty'] : ''}`}>
       {items.map((item) => (
         <li
           key={item.name}
@@ -27,6 +28,13 @@ const List = ({ items, selectedItem, setSelectedItem, }: IListProps) => {
           {item.node ?? item.displayName}
         </li>
       ))}
+      {
+        items.length < 1 && (
+          <div className={styles['empty-text-wrapper']}>
+            No results
+          </div>
+        )
+      }
     </ul>
   );
 };
