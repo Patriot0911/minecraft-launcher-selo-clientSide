@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { loginThunk, registerThunk } from '../thunks/authThunk';
+import { loginThunk, registerThunk, logoutThunk } from '../thunks/authThunk';
 
 interface Role {
   id: string;
@@ -35,48 +35,47 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    logout: (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
-      state.error = null;
-    },
   },
   extraReducers: (builder) => {
-    builder.addCase(loginThunk.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    })
-    .addCase(loginThunk.fulfilled, (state, action) => {
-      state.loading = false;
-      state.user = action.payload.user;
-      state.isAuthenticated = true;
-      state.error = null;
-    })
-    .addCase(loginThunk.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload as string;
-    });
-
-    builder.addCase(registerThunk.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    })
-    .addCase(registerThunk.fulfilled, (state, action) => {
-      state.loading = false;
-      state.isAuthenticated = true;
-      state.user = action.payload.user;
-      state.error = null;
-    })
-    .addCase(registerThunk.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload as string;
-    });
+    builder
+      .addCase(loginThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+        state.error = null;
+      })
+      .addCase(loginThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(registerThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+        state.error = null;
+      })
+      .addCase(registerThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(logoutThunk.fulfilled, (state) => {
+        state.user = null;
+        state.isAuthenticated = false;
+        state.error = null;
+      });
   }
 });
 
 export const {
   registerFailure,
-  logout,
 } = authSlice.actions;
 
 export default authSlice.reducer;

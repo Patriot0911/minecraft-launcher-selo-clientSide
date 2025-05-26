@@ -25,3 +25,15 @@ export const registerThunk = createAsyncThunk(
     }
   }
 );
+
+export const logoutThunk = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      await AuthService.getInstance().logout();
+      return null;
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Logout failed');
+    }
+  }
+);

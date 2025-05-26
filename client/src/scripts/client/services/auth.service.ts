@@ -3,9 +3,11 @@ import { AuthResponse, LoginCredentials, RegisterCredentials, } from "../../../m
 class AuthService {
   private static instance: AuthService;
   private token: string | null = null;
+  private refreshToken: string | null = null;
 
   private constructor() {
     this.token = localStorage.getItem('token');
+    this.refreshToken = localStorage.getItem('refreshToken');
   }
 
   public static getInstance(): AuthService {
@@ -15,14 +17,18 @@ class AuthService {
     return AuthService.instance;
   }
 
-  private setToken(token: string) {
+  private setTokens(token: string, refreshToken: string) {
     this.token = token;
+    this.refreshToken = refreshToken;
     localStorage.setItem('token', token);
+    localStorage.setItem('refreshToken', refreshToken);
   }
 
-  private clearToken() {
+  private clearTokens() {
     this.token = null;
+    this.refreshToken = null;
     localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
   }
 
   public async login(credentials: LoginCredentials): Promise<AuthResponse> {
@@ -30,7 +36,7 @@ class AuthService {
     if (!state) {
       throw new Error(message);
     };
-    this.setToken(data.accessToken);
+    this.setTokens(data.tokens.accessToken, data.tokens.refreshToken);
     return data;
   }
 
@@ -40,12 +46,17 @@ class AuthService {
       const message = data?.details?.map((detail: any) => detail).join('\n') ?? errorMessage;
       throw new Error(message);
     };
-    this.setToken(data.accessToken);
+    this.setTokens(data.tokens.accessToken, data.tokens.refreshToken);
     return data;
   }
 
   public async logout() {
-    this.clearToken();
+    const token = this.token;
+    if (!token) {
+      throw new Error('No token found');
+    }
+    await window.electron.auth.logout(token);
+    this.clearTokens();
   }
 
   public isAuthenticated(): boolean {

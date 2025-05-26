@@ -1,43 +1,32 @@
 import type { LoginCredentials, RegisterCredentials, } from '../../../../models/auth';
 import { IElectronResponse } from '../../../../types/handlers';
 import AuthMapper from '../mappers/auth.mappers';
-import { API_URL } from '../../constants';
-
-const headers = { 'Content-Type': 'application/json', };
+import { createRequest, createAuthorizedRequest } from '../utils/request.utils';
 
 const authHandlers = {
   login: async (credentials: LoginCredentials): Promise<IElectronResponse<any>> => {
-    const res = await fetch(`${API_URL}/auth/login`, {
-      body: JSON.stringify(credentials),
+    const res = await createRequest('/auth/login', {
       method: 'POST',
-      headers,
+      body: JSON.stringify(credentials),
     });
-    const data = await res.json();
-    if(!res.ok)
-      return {
-        data,
-        state: false,
-        status: res.status,
-        message: data.message,
-      };
+    if (!res.state) return res;
     return {
-      data: AuthMapper.loginMapper(data),
-      state: true,
-      status: res.status,
+      ...res,
+      data: AuthMapper.loginMapper(res.data),
     };
   },
+
   register: async (credentials: RegisterCredentials): Promise<IElectronResponse<any>> => {
-    const res = await fetch(`${API_URL}/auth/register`, {
-      body: JSON.stringify(credentials),
+    return createRequest('/auth/register', {
       method: 'POST',
-      headers,
+      body: JSON.stringify(credentials),
     });
-    const data = await res.json();
-    return {
-      data,
-      state: true,
-      status: res.status,
-    };
+  },
+
+  logout: async (token: string): Promise<IElectronResponse<any>> => {
+    return createAuthorizedRequest('/auth/logout', token, {
+      method: 'POST',
+    });
   },
 };
 
