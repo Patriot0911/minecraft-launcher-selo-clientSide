@@ -8,11 +8,7 @@ interface AuthProps {
 
 const Auth = ({ onClose }: AuthProps) => {
   const [isLogin, setIsLogin] = useState(true);
-  useEffect(
-    () => {
 
-    }, []
-  );
   return (
     <div className="auth-wrapper">
       <button

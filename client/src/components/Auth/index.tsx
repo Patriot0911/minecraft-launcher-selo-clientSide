@@ -14,6 +14,12 @@ const Auth = () => {
     }
   }, [isAuthenticated]);
 
+  useEffect(() => {
+    if (user) {
+      setShowAuth(false);
+    }
+  }, [user]);
+
   const toggleAuth = () => {
     setShowAuth(!showAuth);
   };
@@ -22,7 +28,7 @@ const Auth = () => {
     <>
       <div className={styles.authContainer}>
         {isAuthenticated ? (
-          <div className={styles.authButton} onClick={toggleAuth}>
+          <div className={styles.authButton}>
             {user?.username}
           </div>
         ) : (

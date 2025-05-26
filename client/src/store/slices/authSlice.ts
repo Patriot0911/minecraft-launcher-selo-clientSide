@@ -6,10 +6,9 @@ interface Role {
   name: string;
 }
 
-interface User {
+export interface User {
   id: string;
   username: string;
-  email: string;
   createdAt: string;
   roles: Role[];
 };
@@ -49,7 +48,7 @@ const authSlice = createSlice({
     })
     .addCase(loginThunk.fulfilled, (state, action) => {
       state.loading = false;
-      // state.user = action.payload;
+      state.user = action.payload.user;
       state.isAuthenticated = true;
       state.error = null;
     })
@@ -65,7 +64,7 @@ const authSlice = createSlice({
     .addCase(registerThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.isAuthenticated = true;
-      // state.user = action.payload;
+      state.user = action.payload.user;
       state.error = null;
     })
     .addCase(registerThunk.rejected, (state, action) => {

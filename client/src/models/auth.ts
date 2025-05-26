@@ -1,3 +1,5 @@
+import { User } from "../store/slices/authSlice";
+
 export interface LoginCredentials {
   login: string;
   password: string;
@@ -12,4 +14,5 @@ export interface RegisterCredentials {
 export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
+  user: User;
 };
