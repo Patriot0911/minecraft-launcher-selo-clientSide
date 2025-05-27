@@ -39,11 +39,13 @@
     color: #fff;
     font-size: 1.3rem;
     &:hover {
-      background-color: #202020;
+      &:not(:disabled) {
+        background-color: #202020;
+      }
     }
-    &.selected {
-      background-color: #000000;
-      box-shadow: inset 0px 0px 2px 4px #8d40b750;
+    &:disabled {
+      cursor: default;
+      opacity: 0.8;
     }
   }
 }

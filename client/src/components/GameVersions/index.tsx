@@ -1,6 +1,6 @@
 import { LuLibrary } from "react-icons/lu";
 import { RiInstallLine } from "react-icons/ri";
-import { loadVersionsThunk } from "../../store/thunks/versionsThunk";
+import { loadVersionsThunk, playVersionsThunk } from "../../store/thunks/versionsThunk";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectVersion } from "../../store/slices/versionsSlice";
 import { useEffect, useState } from "react";
@@ -17,11 +17,12 @@ const GameVersions = () => {
   } = useAppSelector((state) => state.versions);
 
   const selectItem = (id: string) => dispatch(selectVersion(id));
+  const playHandle = () => dispatch(playVersionsThunk());
 
   useEffect(() => {
     dispatch(loadVersionsThunk({
       page: 1,
-      pageSize: 50,
+      pageSize: 100,
       versionType: 'release',
     }));
   }, []);
@@ -46,11 +47,14 @@ const GameVersions = () => {
         />
       </div>
       <div className={styles['tabs-list']}>
-        <button className={`${styles['tab']} ${styles['selected']}`}>
-          <LuLibrary />
-        </button>
-        <button className={styles['tab']}>
-          <RiInstallLine />
+        <button
+          className={`
+            ${styles['tab']}
+          `}
+          onClick={playHandle}
+          disabled={!selectedVersion}
+        >
+          Install / Play
         </button>
       </div>
     </div>
