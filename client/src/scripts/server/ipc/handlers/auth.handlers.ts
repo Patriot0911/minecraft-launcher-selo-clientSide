@@ -34,6 +34,12 @@ const authHandlers = {
       method: 'GET',
     });
   },
+
+  refreshToken: async (refreshToken: string): Promise<IElectronResponse<any>> => {
+    return createAuthorizedRequest('/auth/refresh', refreshToken, {
+      method: 'POST',
+    });
+  },
 };
 
 export default authHandlers;

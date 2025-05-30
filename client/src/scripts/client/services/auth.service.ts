@@ -71,6 +71,23 @@ class AuthService {
     return data;
   }
 
+  public async refreshTokens() {
+    const refreshToken = this.refreshToken;
+    if (!refreshToken) {
+      throw new Error('No refresh token found');
+    }
+    this.clearTokens();
+    const { data, state, message } = await window.electron.auth.refreshToken(refreshToken);
+    if (!state) {
+      throw new Error(message);
+    }
+    this.setTokens(data.tokens.accessToken, data.tokens.refreshToken);
+  }
+
+  public getAccessToken(): string | null {
+    return this.accessToken;
+  }
+
   public isAuthenticated(): boolean {
     return !!this.accessToken;
   }
