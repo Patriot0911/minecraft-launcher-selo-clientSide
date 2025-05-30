@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { loginThunk, registerThunk, logoutThunk } from '../thunks/authThunk';
+import { loginThunk, registerThunk, logoutThunk, fetchUserDataThunk } from '../thunks/authThunk';
 
 interface Role {
   id: string;
@@ -70,6 +70,22 @@ const authSlice = createSlice({
         state.user = null;
         state.isAuthenticated = false;
         state.error = null;
+      })
+      .addCase(fetchUserDataThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUserDataThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+        state.error = null;
+      })
+      .addCase(fetchUserDataThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        state.user = null;
+        state.isAuthenticated = false;
       });
   }
 });

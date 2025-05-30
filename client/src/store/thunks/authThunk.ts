@@ -37,3 +37,15 @@ export const logoutThunk = createAsyncThunk(
     }
   }
 );
+
+export const fetchUserDataThunk = createAsyncThunk(
+  'auth/fetchUserData',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await AuthService.getInstance().me();
+      return response;
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Failed to fetch user data');
+    }
+  }
+);

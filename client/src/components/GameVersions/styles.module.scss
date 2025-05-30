@@ -1,32 +1,24 @@
 .versions-wrapper {
   flex-grow: 1;
   display: flex;
-  overflow: hidden;
   flex-direction: column;
-  position: relative;
-  .versions-list {
-    padding: 0.2rem 0.5rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    overflow-x: visible;
-    overflow-y: auto;
-    gap: 0.75rem;
-    position: relative;
-    scroll-behavior: smooth;
-    &::-webkit-scrollbar {
-      width: 0px;
-    }
-    &::-webkit-scrollbar-track {
-      background: #00000000;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: #555;
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background: #888;
-    }
+  overflow-x: visible;
+  overflow-y: auto;
+  gap: 0.75rem;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    width: 0px;
   }
+  &::-webkit-scrollbar-track {
+    background: #00000000;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #555;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #888;
+  }
+  padding: 0.2rem 0.5rem;
   .item {
     cursor: pointer;
     width: 100%;
@@ -78,5 +70,27 @@
   .extra {
     font-size: 0.8;
     opacity: 0.4;
+  }
+
+  .no-versions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+    color: #666;
+    height: 100%;
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    p {
+      font-size: 16px;
+      color: #888;
+    }
   }
 }

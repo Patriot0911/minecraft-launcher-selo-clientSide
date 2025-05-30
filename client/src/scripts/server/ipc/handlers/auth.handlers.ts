@@ -28,6 +28,18 @@ const authHandlers = {
       method: 'POST',
     });
   },
+
+  me: async (token: string): Promise<IElectronResponse<any>> => {
+    return createAuthorizedRequest('/auth/me', token, {
+      method: 'GET',
+    });
+  },
+
+  refreshToken: async (refreshToken: string): Promise<IElectronResponse<any>> => {
+    return createAuthorizedRequest('/auth/refresh', refreshToken, {
+      method: 'POST',
+    });
+  },
 };
 
 export default authHandlers;
