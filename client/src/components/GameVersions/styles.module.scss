@@ -6,6 +6,7 @@
   overflow-y: auto;
   gap: 0.75rem;
   scroll-behavior: smooth;
+  height: 100%;
   &::-webkit-scrollbar {
     width: 0px;
   }
@@ -54,6 +55,28 @@
       height: 3.5rem;
       border-radius: 10px;
       background-color: rgba(26, 22, 22, 0.432);
+    }
+  }
+
+  .no-versions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+    color: #666;
+    height: 100%;
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    p {
+      font-size: 16px;
+      color: #888;
     }
   }
 }
