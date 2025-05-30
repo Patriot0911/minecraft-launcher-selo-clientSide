@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { registerFailure } from '../../store/slices/authSlice';
-import { registerThunk } from '../../store/thunks/authThunk';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { registerFailure } from '../../../store/slices/authSlice';
+import { registerThunk } from '../../../store/thunks/authThunk';
 import { useState } from 'react';
 
 const Register = () => {

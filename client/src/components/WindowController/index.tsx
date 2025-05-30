@@ -6,9 +6,29 @@ const WindowController = () => {
   const minimizeWindow = () => window.windowControls.minimize();
   return (
     <div className={styles['window-wrapper']}>
-      <button className={styles['window-action']} onClick={minimizeWindow}>_</button>
-      <button className={styles['window-action']} onClick={maximizeWindow}>[ ]</button>
-      <button className={styles['window-action']} onClick={closeWindow}>X</button>
+      <div className={styles['title']}>
+        SeLo
+      </div>
+      <div className={styles['buttons']}>
+        <button
+          className={`
+            ${styles['window-action']} ${styles['hide']}
+          `}
+          onClick={minimizeWindow}
+        ></button>
+        {/* <button
+          className={`
+            ${styles['window-action']} ${styles['max']}
+          `}
+          onClick={maximizeWindow}
+        ></button> */}
+        <button
+          className={`
+            ${styles['window-action']} ${styles['close']}
+          `}
+          onClick={closeWindow}
+        ></button>
+      </div>
     </div>
   );
 };

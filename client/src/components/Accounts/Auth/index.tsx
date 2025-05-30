@@ -1,8 +1,8 @@
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 import { useEffect, useState, useRef } from 'react';
-import { logoutThunk } from '../../store/thunks/authThunk';
+import { logoutThunk } from '../../../store/thunks/authThunk';
 import AuthModal from './AuthModal';
-import Dropdown from '../ui/Dropdown';
+import Dropdown from '../../ui/Dropdown';
 
 import styles from './styles.module.scss';
 
@@ -55,18 +55,27 @@ const Auth = () => {
     <>
       <div className={styles.authContainer}>
         {isAuthenticated ? (
-          <div className={styles.authButton} onClick={toggleDropdown} ref={dropdownTriggerRef}>
-            {user?.username}
-            <Dropdown
-              items={dropdownItems}
-              isOpen={showDropdown}
-              onClose={() => setShowDropdown(false)}
-              triggerRef={dropdownTriggerRef}
-            />
+          <div className={styles['user-wrapper']}>
+            <div className={styles.avatar}>
+            </div>
+            <div className={styles.info}>
+              <span className={styles.name}>
+                {user?.username}
+              </span>
+              <span className={styles.extra}>
+                Ranked user
+              </span>
+            </div>
           </div>
+          //   <Dropdown
+          //     items={dropdownItems}
+          //     isOpen={showDropdown}
+          //     onClose={() => setShowDropdown(false)}
+          //     triggerRef={dropdownTriggerRef}
+          //   />
         ) : (
           <button className={styles.authButton} onClick={toggleAuth}>
-            Login / Register
+            Login
           </button>
         )}
       </div>

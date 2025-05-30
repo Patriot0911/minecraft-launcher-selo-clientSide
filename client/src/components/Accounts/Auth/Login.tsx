@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { loginThunk } from '../../store/thunks/authThunk';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { loginThunk } from '../../../store/thunks/authThunk';
 import { useState } from 'react';
 
 const Login = () => {

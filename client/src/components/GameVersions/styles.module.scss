@@ -1,51 +1,59 @@
 .versions-wrapper {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  max-height: 100%;
-  overflow: hidden;
-  gap: 0.5rem;
-  .list {
-    background-color: #1a19193f;
-    padding: 0 0.5rem;
-    flex-grow: 1;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-      width: 10px;
-    }
-    &::-webkit-scrollbar-track {
-      background: #00000000;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: #888;
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background: #555;
-    }
+  overflow-x: visible;
+  overflow-y: auto;
+  gap: 0.75rem;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    width: 0px;
   }
-}
-.tabs-list {
-  display: flex;
-  gap: 0.2rem;
-  .tab {
-    border-radius: 5px;
-    background-color: #191919;
-    flex-grow: 1;
-    height: 2.5rem;
+  &::-webkit-scrollbar-track {
+    background: #00000000;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #555;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #888;
+  }
+  padding: 0.2rem 0.5rem;
+  .item {
     cursor: pointer;
+    width: 100%;
     display: flex;
-    justify-content: center;
+    position: relative;
+    min-height: 4.5rem;
+    padding: 0.5rem;
     align-items: center;
-    color: #fff;
-    font-size: 1.3rem;
+    border-radius: 5px;
+    backdrop-filter: blur(20px);
+    background: linear-gradient(
+      to left bottom,
+      rgba(1, 5, 7, 0.781) 35%,
+      rgba(9, 14, 26, 0.418) 90%
+    );
+    gap: 1rem;
+    position: relative;
+    transition: box-shadow 300ms ease;
+    box-shadow: 0px 0px 3px 1px rgba(3, 3, 3, 0.774);
     &:hover {
-      &:not(:disabled) {
-        background-color: #202020;
-      }
+      background-color: rgba(29, 29, 29, 0.068);
     }
-    &:disabled {
-      cursor: default;
-      opacity: 0.8;
+    &.selected {
+      box-shadow: 0px 0px 4px 1px rgba(41, 89, 192, 0.486);
+      background: linear-gradient(
+        to left bottom,
+        rgba(0, 0, 0, 0.918) 35%,
+        rgba(7, 10, 17, 0.897) 90%
+      );
+    }
+    .version-avatar {
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 10px;
+      background-color: rgba(26, 22, 22, 0.432);
     }
   }
 }

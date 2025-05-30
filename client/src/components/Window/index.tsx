@@ -1,26 +1,18 @@
-import { useAppSelector } from '../../store/hooks';
-import styles from './styles.module.scss';
+import AccountCard from '../Accounts/AccountCard';
 import GameVersions from '../GameVersions';
-import Sidebar from '../Layout/Sidebar';
 import Layout from '../Layout';
-import Auth from '../Auth';
+import styles from './styles.module.scss';
+
 
 const Home = () => {
-  const selectedVersion = useAppSelector((state) => state.versions.versions.selectedVersion);
   return (
     <Layout>
-      <Sidebar>
+      <div className={styles['sidebar-wrapper']}>
         <GameVersions />
-      </Sidebar>
+        <AccountCard />
+      </div>
       <div className={styles.mainContent}>
-        <Auth />
-        {
-          selectedVersion && (
-            <div className={styles.versionContent}>
-              <h2>Minecraft {selectedVersion}</h2>
-            </div>
-          )
-        }
+        
       </div>
     </Layout>
   );

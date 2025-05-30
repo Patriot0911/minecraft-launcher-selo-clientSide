@@ -1,7 +1,7 @@
 import { IVersionsQueries, TGameVersionResponse } from '../../../../models/game-versions';
 import { IElectronResponse } from '../../../../types/handlers';
 import QueryParamBuilder from '../utils/queryParamBuilder';
-import downloadFile from '../utils/downloadFile';
+import FileManager from '../utils/downloadFile';
 import { API_URL } from '../../constants';
 import fs from 'fs';
 import path from 'path';
@@ -48,23 +48,40 @@ const gameVersionsHandlers = {
       data: {},
     };
   },
-  installVersion: async (manifestUrl: string): Promise<IElectronResponse<any>> => {
+  installVersion: async (manifestUrl: string, reDownload?: boolean): Promise<IElectronResponse<any>> => {
     const rootDir = specificPath || process.cwd();
     const targetDir = path.join(rootDir, 'installed_versions');
+
+    const fileExists = true;
+    // перевірити чи існує файл до початку завантаження
+
+    if(fileExists && !reDownload)
+      return;
+    // jump to try start
+
     const manifestRes = await fetch(manifestUrl);
+    if(!manifestRes.ok)
+      throw new Error('Cannot get manifest file');
     const manifestData = await manifestRes.json();
 
     const clientJarUrl = manifestData.downloads.client.url;
-    // додати перевірку
-    // чи існує файл версії? etc
-    await downloadFile(clientJarUrl, `${targetDir}/versions/${manifestData.id}.jar`);
+
+    const needToDownload = await FileManager.downloadFile(
+      clientJarUrl,
+      `${targetDir}/versions/${manifestData.id}.jar`,
+      manifestData.downloads.client.sha1
+    );
+
+    if(!needToDownload && !reDownload)
+      return;
+    // jump to start
 
     for(const lib of manifestData.libraries) {
       const artifact = lib.downloads?.artifact;
       console.log(lib);
       if(artifact?.url) {
         const filePath = path.join(`${targetDir}/libraries`, artifact.path);
-        await downloadFile(artifact.url, filePath);
+        await FileManager.downloadFile(artifact.url, filePath);
       };
     };
 
@@ -87,13 +104,16 @@ const gameVersionsHandlers = {
       const assetUrl = `https://resources.download.minecraft.net/${subdir}/${hash}`;
       const assetPath = path.join(`${targetDir}/assets`, 'objects', subdir, hash);
       console.log(asset);
-      await downloadFile(assetUrl, assetPath);
+      // додати обов'язкову редовнлоад, за опцією
+      await FileManager.downloadFile(
+        assetUrl,
+        assetPath,
+        hash
+      );
     };
 
     console.log('done');
-
     startMinecraftClient(manifestData.id);
-
     return {
       state: true,
       status: 200,
