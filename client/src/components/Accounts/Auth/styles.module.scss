@@ -30,11 +30,10 @@
 .authButton {
   background: radial-gradient(
     circle at left bottom,
-    rgba(0, 107, 201, 0.575),
+    rgba(4, 71, 129, 0.575),
     rgba(17, 20, 59, 0.397)
   );
   box-shadow: 0px 0px 5px 1px rgba(51, 108, 231, 0.295);
-  background-size: 200%;
   border: none;
   padding: 8px 16px;
   border-radius: 5px;
@@ -43,10 +42,9 @@
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-position 0.2s;
+  transition: box-shadow 0.2s;
   &:hover {
-    box-shadow: 0px 0px 5px 1px rgba(51, 108, 231, 0.466);
-    background-position: 100%;
+    box-shadow: 0px 0px 5px 1px rgba(51, 108, 231, 0.63);
   }
 }
 

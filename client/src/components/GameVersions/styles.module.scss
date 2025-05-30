@@ -1,24 +1,32 @@
 .versions-wrapper {
   flex-grow: 1;
   display: flex;
+  overflow: hidden;
   flex-direction: column;
-  overflow-x: visible;
-  overflow-y: auto;
-  gap: 0.75rem;
-  scroll-behavior: smooth;
-  &::-webkit-scrollbar {
-    width: 0px;
+  position: relative;
+  .versions-list {
+    padding: 0.2rem 0.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-x: visible;
+    overflow-y: auto;
+    gap: 0.75rem;
+    position: relative;
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #00000000;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #555;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: #888;
+    }
   }
-  &::-webkit-scrollbar-track {
-    background: #00000000;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #555;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background: #888;
-  }
-  padding: 0.2rem 0.5rem;
   .item {
     cursor: pointer;
     width: 100%;
@@ -29,17 +37,19 @@
     align-items: center;
     border-radius: 5px;
     backdrop-filter: blur(20px);
+    user-select: none;
+    -webkit-user-select: none;
     background: linear-gradient(
       to left bottom,
-      rgba(1, 5, 7, 0.781) 35%,
-      rgba(9, 14, 26, 0.418) 90%
+      rgba(2, 2, 2, 0.692) 35%,
+      rgba(7, 10, 17, 0.897) 90%
     );
     gap: 1rem;
     position: relative;
     transition: box-shadow 300ms ease;
-    box-shadow: 0px 0px 3px 1px rgba(3, 3, 3, 0.774);
+    box-shadow: 0px 0px 3px 1px rgba(29, 38, 53, 0.342);
     &:hover {
-      background-color: rgba(29, 29, 29, 0.068);
+      background-color: rgba(62, 113, 143, 0.068);
     }
     &.selected {
       box-shadow: 0px 0px 4px 1px rgba(41, 89, 192, 0.486);
@@ -54,6 +64,19 @@
       height: 3.5rem;
       border-radius: 10px;
       background-color: rgba(26, 22, 22, 0.432);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0.75rem;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
+  }
+  .extra {
+    font-size: 0.8;
+    opacity: 0.4;
   }
 }

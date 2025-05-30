@@ -1,4 +1,4 @@
-import { loadVersionsThunk, playVersionsThunk } from "../../store/thunks/versionsThunk";
+import { loadVersionsThunk, } from "../../store/thunks/versionsThunk";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectVersion } from "../../store/slices/versionsSlice";
 import { useEffect, } from "react";
@@ -12,7 +12,6 @@ const GameVersions = () => {
   } = useAppSelector((state) => state.versions);
 
   const selectItem = (id: string) => dispatch(selectVersion(id));
-  const playHandle = () => dispatch(playVersionsThunk());
 
   useEffect(() => {
     dispatch(loadVersionsThunk({
@@ -24,32 +23,42 @@ const GameVersions = () => {
 
   return (
     <div className={styles['versions-wrapper']}>
-      {
-        data.map(
-          (state) => (
-            <div
-              key={state.id}
-              className={`${styles['item']} ${selectedVersion === state.id ? styles.selected : ''}`}
-              onClick={() => selectItem(state.id)}
-            >
-              <div className={styles['version-avatar']}>
-              </div>
-              <div className={styles['version-info']}>
-                <div className={styles['body']}>
-                  {state.versionId}
+      <div className={styles['versions-list']}>
+        {
+          data.map(
+            (state) => (
+              <div
+                key={state.id}
+                className={`${styles['item']} ${selectedVersion === state.id ? styles.selected : ''}`}
+                onClick={() => selectItem(state.id)}
+              >
+                <div className={styles['version-avatar']}>
+                  {/* <img
+                    src="https://icon-library.com/images/minecraft-png-icon/minecraft-png-icon-12.jpg"
+                  /> */}
                 </div>
-                {
-                  false && (
-                    <div>
-                      {/* need to install ? */}
+                <div className={styles['version-info']}>
+                  <div className={styles['body']}>
+                    <div className={styles['game-version']}>
+                      {state.versionId}
                     </div>
-                  )
-                }
+                    <div className={styles['extra']}>
+                      vanial
+                    </div>
+                  </div>
+                  {
+                    false && (
+                      <div>
+                        {/* need to install ? */}
+                      </div>
+                    )
+                  }
+                </div>
               </div>
-            </div>
+            )
           )
-        )
-      }
+        }
+      </div>
     </div>
   );
 };
