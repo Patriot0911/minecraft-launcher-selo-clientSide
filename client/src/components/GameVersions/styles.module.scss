@@ -1,24 +1,31 @@
 .versions-wrapper {
   flex-grow: 1;
   display: flex;
+  overflow: hidden;
   flex-direction: column;
-  overflow-x: visible;
-  overflow-y: auto;
-  gap: 0.75rem;
-  scroll-behavior: smooth;
-  &::-webkit-scrollbar {
-    width: 0px;
+  position: relative;
+  .versions-list {
+    padding: 0.2rem 0.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-x: visible;
+    overflow-y: auto;
+    gap: 0.75rem;
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #00000000;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #555;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: #888;
+    }
   }
-  &::-webkit-scrollbar-track {
-    background: #00000000;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #555;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background: #888;
-  }
-  padding: 0.2rem 0.5rem;
   .item {
     cursor: pointer;
     width: 100%;
@@ -71,7 +78,6 @@
     font-size: 0.8;
     opacity: 0.4;
   }
-
   .no-versions {
     display: flex;
     flex-direction: column;
