@@ -11,10 +11,12 @@ export interface RegisterCredentials {
   password: string;
 };
 
+export interface Tokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface AuthResponse {
-  tokens: {
-    accessToken: string;
-    refreshToken: string;
-  };
+  tokens: Tokens;
   user: User;
 };

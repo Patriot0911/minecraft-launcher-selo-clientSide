@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
 const modules = {
-  auth: ['login', 'register', 'logout'],
+  auth: ['login', 'register', 'logout', 'me'],
   gameVersions: ['getVersions', 'getInstalledVersions', 'installVersion'],
 };
 

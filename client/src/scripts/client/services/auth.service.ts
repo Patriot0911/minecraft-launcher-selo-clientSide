@@ -2,11 +2,11 @@ import { AuthResponse, LoginCredentials, RegisterCredentials, } from "../../../m
 
 class AuthService {
   private static instance: AuthService;
-  private token: string | null = null;
+  private accessToken: string | null = null;
   private refreshToken: string | null = null;
 
   private constructor() {
-    this.token = localStorage.getItem('token');
+    this.accessToken = localStorage.getItem('accessToken');
     this.refreshToken = localStorage.getItem('refreshToken');
   }
 
@@ -18,16 +18,16 @@ class AuthService {
   }
 
   private setTokens(token: string, refreshToken: string) {
-    this.token = token;
+    this.accessToken = token;
     this.refreshToken = refreshToken;
-    localStorage.setItem('token', token);
+    localStorage.setItem('accessToken', token);
     localStorage.setItem('refreshToken', refreshToken);
   }
 
   private clearTokens() {
-    this.token = null;
+    this.accessToken = null;
     this.refreshToken = null;
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
   }
 
@@ -51,7 +51,7 @@ class AuthService {
   }
 
   public async logout() {
-    const token = this.token;
+    const token = this.accessToken;
     if (!token) {
       throw new Error('No token found');
     }
@@ -59,8 +59,20 @@ class AuthService {
     this.clearTokens();
   }
 
+  public async me() {
+    const token = this.accessToken;
+    if (!token) {
+      throw new Error('No token found');
+    }
+    const { data, state, message } = await window.electron.auth.me(token);
+    if (!state) {
+      throw new Error(message);
+    }
+    return data;
+  }
+
   public isAuthenticated(): boolean {
-    return !!this.token;
+    return !!this.accessToken;
   }
 }
 
