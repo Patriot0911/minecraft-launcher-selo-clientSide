@@ -6,11 +6,12 @@ interface VersionsState {
   loading: boolean;
   error: string | null;
   versions: {
-    selectedVersion: string;
+    selectedVersion: IGameVersion;
     vanila: {
       total: number;
       data: IGameVersion[];
     }
+    installed: string[];
   }
 };
 
@@ -23,6 +24,7 @@ const initialState: VersionsState = {
       total: 0,
       data: [],
     },
+    installed: [],
   },
 };
 
@@ -30,7 +32,7 @@ const versionsSlice = createSlice({
   name: 'versions',
   initialState,
   reducers: {
-    selectVersion: (state, action: PayloadAction<string>) => {
+    selectVersion: (state, action: PayloadAction<IGameVersion>) => {
       state.versions.selectedVersion = action.payload;
     },
   },

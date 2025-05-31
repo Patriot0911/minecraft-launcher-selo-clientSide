@@ -1,0 +1,62 @@
+
+.bottom-section {
+  display: flex;
+  justify-content: flex-end;
+  height: 125px;
+  .button-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    height: 100%;
+    align-items: flex-end;
+    .action-bar {
+      width: fit-content;
+      height: 25px;
+      display: grid;
+      grid-template-columns: repeat(1fr, 1);
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      box-shadow: 0px 0px 3px 1px rgba(255, 255, 255, 0.288);
+      border-bottom: 0;
+      user-select: none;
+      background: radial-gradient(
+        circle at left bottom,
+        rgba(0, 107, 201, 0.993),
+        rgb(0, 17, 255)
+      );
+      .item {
+        cursor: pointer;
+        text-align: center;
+        padding: 0.2rem 1.5rem;
+        color: white;
+      }
+    }
+    .action-button {
+      cursor: pointer;
+      box-shadow: 0px 0px 5px 4px rgba(63, 153, 255, 0.37);
+      background: radial-gradient(
+        circle at left bottom,
+        rgba(0, 107, 201, 0.993),
+        rgb(0, 17, 255)
+      );
+      height: 200px;
+      width: 300px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      font-weight: 600;
+      color: white;
+      &:disabled {
+        opacity: 0.8;
+        cursor: default;
+        background: radial-gradient(
+          circle at left bottom,
+          rgba(1, 77, 143, 0.993),
+          rgb(2, 14, 189)
+        );
+      }
+    }
+  }
+}

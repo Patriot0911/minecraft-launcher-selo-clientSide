@@ -1,14 +1,10 @@
 import { loadVersionsThunk, } from "../../store/thunks/versionsThunk";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectVersion } from "../../store/slices/versionsSlice";
+import { IGameVersion } from "../../models/game-versions";
 import { useEffect } from "react";
 
 import styles from "./styles.module.scss";
-
-interface IGameVersion {
-  id: string;
-  versionId: string;
-}
 
 const GameVersions = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +15,7 @@ const GameVersions = () => {
     },
   } = useAppSelector((state) => state.versions);
 
-  const selectItem = (id: string) => dispatch(selectVersion(id));
+  const selectItem = (state: IGameVersion) => dispatch(selectVersion(state));
 
   useEffect(() => {
     dispatch(
@@ -40,8 +36,8 @@ const GameVersions = () => {
               (state) => (
                 <div
                   key={state.id}
-                  className={`${styles['item']} ${selectedVersion === state.id ? styles.selected : ''}`}
-                  onClick={() => selectItem(state.id)}
+                  className={`${styles['item']} ${selectedVersion?.id === state.id ? styles.selected : ''}`}
+                  onClick={() => selectItem(state)}
                 >
                   <div className={styles['version-avatar']}>
                   </div>

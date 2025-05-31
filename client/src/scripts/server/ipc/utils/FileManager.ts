@@ -9,7 +9,7 @@ const streamPipeline = promisify(pipeline);
 class FileManager {
   static async calculateFileHash(filePath: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      const hash = createHash('sha256');
+      const hash = createHash('sha1');
       const stream = fs.createReadStream(filePath);
       stream.on('data', chunk => hash.update(chunk));
       stream.on('end', () => resolve(hash.digest('hex')));

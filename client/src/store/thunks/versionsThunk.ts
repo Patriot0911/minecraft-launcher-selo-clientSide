@@ -17,15 +17,12 @@ export const loadVersionsThunk = createAsyncThunk(
 export const playVersionsThunk = createAsyncThunk(
   'versions/play',
   async (_, { rejectWithValue, getState }) => {
-    const { versions: { versions: { selectedVersion, vanila, }, }, } = (getState() as any);
-    const manifest = vanila.data.find(
-      (state: any) => state.id === selectedVersion
-    );
+    const { versions: { versions: { selectedVersion, }, }, } = (getState() as any);
     try {
-      const response = await GameVersionsService.getInstance().playVersion(manifest.packageUrl);
+      const response = await GameVersionsService.getInstance().playVersion(selectedVersion.versionId, selectedVersion.packageUrl);
       return response;
     } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : 'Login failed');
+      return rejectWithValue(error instanceof Error ? error.message : 'Action failed');
     }
   }
 );

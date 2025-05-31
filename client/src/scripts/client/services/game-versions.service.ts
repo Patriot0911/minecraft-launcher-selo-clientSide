@@ -28,13 +28,19 @@ class GameVersionsService {
     return data;
   };
 
-  public async playVersion(versionManifestUrl: string) {
-    const { data, state, message, } = await window.electron.gameVersions.installVersion(versionManifestUrl);
+  public async playVersion(
+    versionId: string,
+    versionManifestUrl: string,
+  ) {
+    const { data, state, message, } = await window.electron.gameVersions.installVersion(versionId, versionManifestUrl);
     if(!state) {
       throw new Error(message);
     };
     return data;
   };
+
+  public openFolder = () =>
+    window.electron.gameVersions.openFolder();
 };
 
 export default GameVersionsService;
