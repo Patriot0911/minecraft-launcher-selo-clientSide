@@ -4,19 +4,20 @@ import path from 'path';
 import fs from 'fs';
 
 class ClientLauncher {
-  static ramSize: number = 2;
+  static ramSize: number = 16;
 
   static launchClient(versionId: string) {
     const rootDir = process.cwd();
     const targetDir = path.join(rootDir, 'installed_versions');
 
     const username = 'TestUser';
-    const javaPath = 'java';
+    const javaPath = "java";
 
     const baseDir = targetDir;
     const librariesDir = path.join(baseDir, 'libraries');
     const clientJar = path.join(baseDir, 'versions', `${versionId}.jar`);
     const assetDir = path.join(baseDir, 'assets');
+    const nativesDir = path.join(baseDir, 'natives');
 
     function collectClasspath() {
       const jars = [];
@@ -41,7 +42,8 @@ class ClientLauncher {
 
     const classpath = collectClasspath();
     const args = [
-      `-Xmx2G`,
+      `-Djava.library.path=${nativesDir}`,
+      `-Xmx${this.ramSize}G`,
       '-cp', classpath,
       'net.minecraft.client.main.Main',
       '--username', username,
@@ -53,10 +55,10 @@ class ClientLauncher {
       '--userType', 'legacy',
     ];
 
-    console.log({args});
+    fs.writeFileSync('classpath.txt', args.join(' '));
 
     console.log('Launching Minecraft...');
-    const mc = spawn(javaPath, args, { stdio: 'inherit' });
+    const mc = spawn(javaPath, ['@classpath.txt'], { stdio: 'inherit', });
 
     mc.on('exit', (code: any) => {
       console.log(`Minecraft exited with code ${code}`);

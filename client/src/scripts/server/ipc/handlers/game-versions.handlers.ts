@@ -1,7 +1,7 @@
 import { IVersionsQueries, TGameVersionResponse } from '../../../../models/game-versions';
 import { IElectronResponse } from '../../../../types/handlers';
 import QueryParamBuilder from '../utils/queryParamBuilder';
-import ClientInstaller from '../utils/clientInstaller';
+import ClientInstaller from '../utils/ClientInstaller';
 import { API_URL } from '../../constants';
 import { shell, } from 'electron';
 import path from 'path';

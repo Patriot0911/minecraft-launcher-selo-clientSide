@@ -1,8 +1,9 @@
 import path from 'path';
 import fs from 'fs';
 import ClientLauncher from "./ClientLauncher";
-import FileManager from './fileManager';
-
+import FileManager from './FileManager';
+import os from 'os';
+import unzipper from 'unzipper';
 
 class ClientInstaller {
   #versionId: string;
@@ -15,24 +16,25 @@ class ClientInstaller {
     this.#manifestUrl = manifestUrl;
     this.#versionId = versionId;
     this.#targetDir = path.join(rootDir, 'installed_versions');
-    this.#rewrite = rewrite;
+    this.#rewrite = !!rewrite;
   };
 
   async fullInstall() {
-    await this.getManifest();
+    const isManifest = await this.getManifest();
     const isInstalled = await this.checkIfInstalledClient();
-    if(isInstalled && !this.#rewrite)
+    if(isInstalled && (!this.#rewrite || isManifest)) // потім додати можна відповідно збереження версій локально, аби не викликати маніфест
       return ClientLauncher.launchClient(this.#manifestData.id);
     await this.downloadClient();
     await this.downloadLibs();
     await this.downloadAssets();
+    await this.downloadNatives();
     ClientLauncher.launchClient(this.#manifestData.id);
   };
 
   async getManifest() {
     const manifestRes = await fetch(this.#manifestUrl);
     if(!manifestRes.ok)
-      throw new Error('Cannot get manifest file');
+      return false;
     this.#manifestData = await manifestRes.json();
   };
 
@@ -64,10 +66,44 @@ class ClientInstaller {
         await FileManager.downloadFile(
           artifact.url,
           filePath,
-          ignoreHash ? undefined : artifact.sha1
+          undefined
         );
       };
     };
+  };
+
+  async downloadNatives() {
+    for (const lib of this.#manifestData.libraries) {
+      if (!lib.natives) continue;
+
+      const platform = (() => {
+        switch (os.platform()) {
+          case 'win32': return 'windows';
+          case 'darwin': return 'osx';
+          case 'linux': return 'linux';
+          default: return null;
+        }
+      })();
+      if (!platform) continue;
+
+      if (!lib.natives[platform]) continue;
+
+      const classifier = lib.natives[platform].replace('${arch}', os.arch());
+      if (!lib.downloads?.classifiers?.[classifier]) continue;
+
+      const nativeUrl = lib.downloads.classifiers[classifier].url;
+      const nativePath = path.join(this.#targetDir, 'natives', path.basename(nativeUrl));
+
+      fs.mkdirSync(path.dirname(nativePath), { recursive: true });
+
+      await FileManager.downloadFile(nativeUrl, nativePath);
+
+      await fs.createReadStream(nativePath)
+        .pipe(unzipper.Extract({ path: path.join(this.#targetDir, 'natives') }))
+        .promise();
+
+      fs.unlinkSync(nativePath);
+    }
   };
 
   async downloadAssets(ignoreHash?: boolean) {
