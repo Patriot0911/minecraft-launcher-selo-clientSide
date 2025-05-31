@@ -15,7 +15,7 @@ class ClientLauncher {
 
     const baseDir = targetDir;
     const librariesDir = path.join(baseDir, 'libraries');
-    const clientJar = path.join(baseDir, `versions/${versionId}.jar`);
+    const clientJar = path.join(baseDir, 'versions', `${versionId}.jar`);
     const assetDir = path.join(baseDir, 'assets');
 
     function collectClasspath() {
